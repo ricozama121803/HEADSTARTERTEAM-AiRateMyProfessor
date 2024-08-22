@@ -12,7 +12,6 @@ export default function Home() {
     },
   ]);
 
-  // Corrected this to properly declare `message` and `setMessage`
   const [message, setMessage] = useState("");
 
   const sendMessage = async () => {
@@ -65,23 +64,32 @@ export default function Home() {
       justifyContent="center"
       alignItems="center"
       sx={{
-        background: "linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%)",
+        backgroundImage: `url('/abstract3.jpg')`, // Use the image from the public folder
+        backgroundSize: 'cover', // Ensures the image covers the whole area
+        backgroundPosition: 'center', // Center the image
+        backgroundRepeat: 'no-repeat', // Prevents the image from repeating
+        overflow: "hidden",
       }}
     >
       <Stack
         direction="column"
         width="500px"
         height="700px"
-        border="1px solid black"
         p={2}
         spacing={3}
+        sx={{
+          background: "rgba(255, 255, 255, 0.2)", // Semi-transparent white
+          borderRadius: "16px",
+          backdropFilter: "blur(10px)", // Apply blur effect
+          border: "1px solid rgba(255, 255, 255, 0.3)", // Light border
+          boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)", // Subtle shadow
+        }}
       >
         <Stack
           direction="column"
           spacing={2}
           flexGrow={1}
           overflow={"auto"}
-          maxHeight={"100%"}
           sx={{
             maxHeight: "100%",
             padding: "10px",
@@ -106,14 +114,18 @@ export default function Home() {
               }
             >
               <Box
-                bgcolor={
-                  message.role === "assistant"
-                    ? "primary.main"
-                    : "secondary.main"
-                }
-                color="white"
-                borderRadius={16}
-                p={3}
+                sx={{
+                  bgcolor:
+                    message.role === "assistant"
+                      ? "rgba(0, 0, 0, 0.5)" // Darker color for assistant messages
+                      : "rgba(0, 123, 255, 0.7)", // Distinctive color for user messages
+                  backdropFilter: "blur(5px)",
+                  color: "white",
+                  borderRadius: "16px",
+                  p: 3,
+                  border: "1px solid rgba(255, 255, 255, 0.3)",
+                  maxWidth: "80%", // To avoid taking up too much space
+                }}
               >
                 <ReactMarkdown>{message.content}</ReactMarkdown>
               </Box>
@@ -128,8 +140,23 @@ export default function Home() {
             onChange={(e) => {
               setMessage(e.target.value);
             }}
+            sx={{
+              bgcolor: "rgba(255, 255, 255, 0.2)",
+              backdropFilter: "blur(5px)",
+              borderRadius: "8px",
+              border: "1px solid rgba(255, 255, 255, 0.3)",
+            }}
           />
-          <Button variant="contained" onClick={sendMessage}>
+          <Button
+            variant="contained"
+            onClick={sendMessage}
+            sx={{
+              bgcolor: "rgba(255, 255, 255, 0.2)",
+              backdropFilter: "blur(5px)",
+              borderRadius: "8px",
+              border: "1px solid rgba(255, 255, 255, 0.3)",
+            }}
+          >
             Send
           </Button>
         </Stack>
