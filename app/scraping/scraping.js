@@ -90,6 +90,12 @@ const extractReviews = async (htmlContent) => {
 }
 
 export async function scrapeRMP(rmpLink){
+    /*
+    input: "https://www.ratemyprofessors.com/professor/(7 digit professor identifier)"
+    output: array [teacherInfo, reviews]
+        - teacherInfo: {name, avgRating, wouldTakeAgain, difficultyLevel, topTags}
+        - reviews: list of review objects {class, date, quality, difficulty, comment}
+     */
     let teacherInfoHtml;
     let reviewsHtml;
     let browser;
