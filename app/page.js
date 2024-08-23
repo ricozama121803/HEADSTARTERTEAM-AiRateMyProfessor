@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { Box, Stack, TextField, Button } from '@mui/material';
+import { Box, Stack, TextField, Button, Typography, InputAdornment } from '@mui/material';
+import { ArrowUpward } from '@mui/icons-material'; 
 import ReactMarkdown from 'react-markdown';
 import { motion } from 'framer-motion';
 import WelcomeScreen from './WelcomeScreen';
@@ -28,6 +29,8 @@ export default function Home() {
   }, [showWelcome]);
 
   const sendMessage = async () => {
+    if (message.trim() === '') return; // Prevent sending empty messages
+
     setMessages((prevMessages) => [
       ...prevMessages,
       { role: 'user', content: message },
@@ -78,8 +81,6 @@ export default function Home() {
           height: '100vh',
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
           backgroundImage: `url('/abstract3.jpg')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
@@ -87,102 +88,155 @@ export default function Home() {
           overflow: 'hidden',
         }}
       >
-        <motion.div
-          initial={{ opacity: 0, scale: 0.98 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 2, ease: [0.4, 0, 0.2, 1] }}  // Custom easing for smoother effect
+        {/* Header with logo and app */}
+        <Box
+          sx={{
+            width: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            padding: '16px',
+            position: 'absolute',
+            top: 0,
+            left: 0
+          }}
         >
-          <Stack
-            direction="column"
-            width="500px"
-            height="700px"
-            p={2}
-            spacing={3}
+          <img
+            src="/logo-small.png" 
+            alt="ProfSpot Logo"
+            style={{ width: '90px', height: '50px', marginRight: '-17px' }}
+          />
+          <Typography variant="h6" fontWeight="bold" color='#a3aab5'
             sx={{
-              background: 'rgba(255, 255, 255, 0.2)',
-              borderRadius: '16px',
-              backdropFilter: 'blur(10px)',
-              border: '1px solid rgba(255, 255, 255, 0.3)',
-              boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
+              fontFamily: "Arial, sans-serif",
+              fontSize: "1.5rem",
             }}
+          >
+            ProfSpot
+          </Typography>
+        </Box>
+
+        <Box
+          sx={{
+            display: contentVisible ? 'block' : 'none',
+            width: '100vw',
+            height: '100vh',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.98 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 2, ease: [0.4, 0, 0.2, 1] }}  // Custom easing for smoother effect
           >
             <Stack
               direction="column"
-              spacing={2}
-              flexGrow={1}
-              overflow={'auto'}
+              width="500px"
+              height="700px"
+              p={2}
+              spacing={3}
               sx={{
-                maxHeight: '100%',
-                padding: '10px',
-                '&::-webkit-scrollbar': {
-                  width: '5px',
-                },
-                '&::-webkit-scrollbar-thumb': {
-                  backgroundColor: '#888',
-                  borderRadius: '10px',
-                },
-                '&::-webkit-scrollbar-thumb:hover': {
-                  backgroundColor: '#555',
-                },
+                background: 'rgba(255, 255, 255, 0.2)',
+                borderRadius: '16px',
+                backdropFilter: 'blur(10px)',
+                border: '1px solid rgba(255, 255, 255, 0.3)',
+                boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
               }}
             >
-              {messages.map((message, index) => (
-                <Box
-                  key={index}
-                  display="flex"
-                  justifyContent={
-                    message.role === 'assistant' ? 'flex-start' : 'flex-end'
-                  }
-                >
-                  <Box
-                    sx={{
-                      bgcolor:
-                        message.role === 'assistant'
-                          ? 'rgba(0, 0, 0, 0.5)'
-                          : 'rgba(0, 123, 255, 0.7)',
-                      backdropFilter: 'blur(5px)',
-                      color: 'white',
-                      borderRadius: '16px',
-                      p: 3,
-                      border: '1px solid rgba(255, 255, 255, 0.3)',
-                      maxWidth: '80%',
-                    }}
-                  >
-                    <ReactMarkdown>{message.content}</ReactMarkdown>
-                  </Box>
-                </Box>
-              ))}
-            </Stack>
-            <Stack direction={'row'} spacing={2}>
-              <TextField
-                label="Message"
-                fullWidth
-                value={message}
-                onChange={(e) => {
-                  setMessage(e.target.value);
-                }}
+              <Stack
+                direction="column"
+                spacing={2}
+                flexGrow={1}
+                overflow={'auto'}
                 sx={{
-                  bgcolor: 'rgba(255, 255, 255, 0.2)',
-                  backdropFilter: 'blur(5px)',
-                  borderRadius: '8px',
-                  border: '1px solid rgba(255, 255, 255, 0.3)',
-                }}
-              />
-              <Button
-                variant="contained"
-                onClick={sendMessage}
-                sx={{
-                  bgcolor: 'rgba(255, 255, 255, 0.2)',
-                  backdropFilter: 'blur(5px)',
-                  borderRadius: '8px',
-                  border: '1px solid rgba(255, 255, 255, 0.3)',
+                  maxHeight: '100%',
+                  padding: '10px',
+                  '&::-webkit-scrollbar': {
+                    width: '5px',
+                  },
+                  '&::-webkit-scrollbar-thumb': {
+                    backgroundColor: '#888',
+                    borderRadius: '10px',
+                  },
+                  '&::-webkit-scrollbar-thumb:hover': {
+                    backgroundColor: '#555',
+                  },
                 }}
               >
-                Send
-              </Button>
+                {messages.map((message, index) => (
+                  <Box
+                    key={index}
+                    display="flex"
+                    justifyContent={
+                      message.role === 'assistant' ? 'flex-start' : 'flex-end'
+                    }
+                  >
+                    <Box
+                      sx={{
+                        bgcolor:
+                          message.role === 'assistant'
+                            ? 'rgba(0, 0, 0, 0.5)'
+                            : 'rgba(10, 130, 180, 0.7)',
+                        backdropFilter: 'blur(5px)',
+                        color: 'white',
+                        borderRadius: '16px',
+                        p: 3,
+                        border: '1px solid rgba(255, 255, 255, 0.3)',
+                        maxWidth: '80%',
+                      }}
+                    >
+                      <ReactMarkdown>{message.content}</ReactMarkdown>
+                    </Box>
+                  </Box>
+                ))}
+              </Stack>
+              <Stack direction={'row'} spacing={2}>
+                <TextField
+                  label="Message"
+                  fullWidth
+                  value={message}
+                  onChange={(e) => {
+                    setMessage(e.target.value);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault();
+                      sendMessage();
+                    }
+                  }}
+                  sx={{
+                    bgcolor: 'rgba(255, 255, 255, 0.2)',
+                    backdropFilter: 'blur(5px)',
+                    borderRadius: '8px',
+                    border: '1px solid rgba(255, 255, 255, 0.3)',
+                  }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <Button
+                          onClick={sendMessage}
+                          sx={{
+                            minWidth: 'auto',
+                            borderRadius: '50%',
+                            padding: '4px',
+                            bgcolor: 'rgba(255, 255, 255, 0.3)',
+                            '&:hover': {
+                              bgcolor: 'rgba(255, 255, 255, 0.4)',
+                            },
+                          }}
+                        >
+                          <ArrowUpward />
+                        </Button>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </Stack>
             </Stack>
-          </Stack>
-        </motion.div>
+          </motion.div>
+        </Box>
       </Box>
     </Box>
   );
