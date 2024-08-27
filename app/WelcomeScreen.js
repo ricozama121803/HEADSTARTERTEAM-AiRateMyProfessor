@@ -49,7 +49,7 @@ export default function WelcomeScreen({ onFinish }) {
         <Typography variant="h3"
           component={motion.h3}
           sx={{
-            background: 'linear-gradient(90deg, #ff8a00, #e52e71)',
+            background: 'linear-gradient(to right, #e8fff7, #d7fff1, #c6ffeb, #b5ffe5, #a2ffde)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             fontWeight: 'bold',
@@ -58,7 +58,7 @@ export default function WelcomeScreen({ onFinish }) {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.5, ease: 'easeOut' }}
-       >Find My Professor</Typography>
+       >ProfSpot</Typography>
       </Box>
     </motion.div>
   );
