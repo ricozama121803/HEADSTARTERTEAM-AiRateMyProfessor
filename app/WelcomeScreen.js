@@ -59,7 +59,6 @@ export default function WelcomeScreen({ onFinish }) {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          flexDirection: 'column', // Stack content vertically
           backgroundColor: '#000',
           color: '#fff',
           zIndex: 1000, // Ensure the welcome screen is on top
@@ -67,19 +66,35 @@ export default function WelcomeScreen({ onFinish }) {
       >
         <Box
           sx={{
+            width: '400px', // Make the card narrower for a portrait orientation
+            height: '600px', // Make the card taller for a portrait orientation
+            padding: '40px 20px', // Adjust padding for more vertical space
             background: 'rgba(255, 255, 255, 0.1)', // More transparent background
             borderRadius: '15px', // Slightly more rounded corners for a softer look
-            padding: '20px 40px', // Extra padding to create more space around the text
             backdropFilter: 'blur(15px)', // Increase blur for a glassier effect
             WebkitBackdropFilter: 'blur(15px)', // Ensure compatibility with Webkit browsers
             boxShadow: '0 8px 32px rgba(0, 0, 0, 0.37)', // Stronger shadow for more depth
             border: '1px solid rgba(255, 255, 255, 0.18)', // Softer border to enhance glass effect
             textAlign: 'center', // Center align the text
-            marginBottom: '20px', // Space between the card and the button
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between', // Space out the elements inside the card
+            alignItems: 'center',
           }}
         >
           <Typography
-            variant="h3"
+            variant="subtitle2" // Smaller font for "Introducing . . ."
+            sx={{
+              color: '#fff',
+              opacity: 0.8, // Slight transparency for subtext
+              fontWeight: '700', // Lighter font weight for subtext
+              marginBottom: '10px', // Space between this and the main title
+            }}
+          >
+            Introducing . . .
+          </Typography>
+          <Typography
+            variant="h2"
             component={motion.h3}
             sx={{
               background: '#ffffff',
@@ -101,28 +116,29 @@ export default function WelcomeScreen({ onFinish }) {
               color: '#fff',
               opacity: 0.8, // Slight transparency for subtext
               fontWeight: '300', // Lighter font weight for subtext
+              marginBottom: '20px', // Space between the text and the button
             }}
           >
-            Introducing the OpenAI-Powered RAG Assistant to RateMyProfessor.com
+            OpenAI-Powered RAG Assistant to RateMyProfessor.com
           </Typography>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleClick}
+            sx={{
+              padding: '10px 20px',
+              borderRadius: '8px',
+              backgroundColor: '#4b32e5', // Match the color with the theme
+              '&:hover': {
+                backgroundColor: '#3b29c5', // Slightly darker shade on hover
+              },
+              fontSize: '16px',
+              fontWeight: 'bold',
+            }}
+          >
+            Chat now
+          </Button>
         </Box>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleClick}
-          sx={{
-            padding: '10px 20px',
-            borderRadius: '8px',
-            backgroundColor: '#4b32e5', // Match the color with the theme
-            '&:hover': {
-              backgroundColor: '#3b29c5', // Slightly darker shade on hover
-            },
-            fontSize: '16px',
-            fontWeight: 'bold',
-          }}
-        >
-          Chat now
-        </Button>
       </Box>
     </motion.div>
   );
