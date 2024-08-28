@@ -1,11 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Box, Typography } from '@mui/material';
 import { motion } from 'framer-motion';
+import * as THREE from 'three'; // Importing three.js
+import HALO from 'vanta/dist/vanta.halo.min'; // Importing the Vanta HALO effect
 
 export default function WelcomeScreen({ onFinish }) {
   const [fadeOut, setFadeOut] = useState(false);
+  const vantaRef = useRef(null); // Create a ref to attach the Vanta effect
 
   useEffect(() => {
+    // Initialize the Vanta HALO effect
+    const vantaEffect = HALO({
+      el: vantaRef.current,
+      mouseControls: true,
+      touchControls: true,
+      gyroControls: false,
+      minHeight: 200.00,
+      minWidth: 200.00,
+      size: 1.80,
+      THREE // Pass the three.js instance
+    });
+
     // Start fade-out after a delay
     const timer = setTimeout(() => {
       setFadeOut(true);
@@ -16,7 +31,9 @@ export default function WelcomeScreen({ onFinish }) {
       onFinish();
     }, 2500); // Total time including fade-out (2s + 0.5s)
 
+    // Cleanup effect when the component unmounts
     return () => {
+      if (vantaEffect) vantaEffect.destroy();
       clearTimeout(timer);
       clearTimeout(fadeTimer);
     };
@@ -32,6 +49,7 @@ export default function WelcomeScreen({ onFinish }) {
       }}
     >
       <Box
+        ref={vantaRef} // Attach the Vanta effect to this element
         sx={{
           position: 'fixed',
           top: 0,
@@ -58,7 +76,9 @@ export default function WelcomeScreen({ onFinish }) {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.5, ease: 'easeOut' }}
-       >ProfSpot</Typography>
+        >
+          ProfSpot
+        </Typography>
       </Box>
     </motion.div>
   );

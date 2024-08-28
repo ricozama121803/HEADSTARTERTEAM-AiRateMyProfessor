@@ -25,7 +25,7 @@ export default function Home() {
     if (!showWelcome) {
       const timer = setTimeout(() => {
         setContentVisible(true);
-      }, 300); // Slight delay to sync with WelcomeScreen
+      }, 1000); // Slight delay to sync with WelcomeScreen
       return () => clearTimeout(timer);
     }
   }, [showWelcome]);
