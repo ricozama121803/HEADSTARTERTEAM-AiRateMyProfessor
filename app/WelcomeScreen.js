@@ -82,7 +82,7 @@ export default function WelcomeScreen({ onFinish }) {
             variant="h3"
             component={motion.h3}
             sx={{
-              background: 'linear-gradient(to right, #e8fff7, #d7fff1, #c6ffeb, #b5ffe5, #a2ffde)',
+              background: '#ffffff',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               fontWeight: 'bold',
